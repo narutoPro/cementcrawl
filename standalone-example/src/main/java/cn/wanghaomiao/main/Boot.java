@@ -18,5 +18,6 @@ public class Boot {
 //        s.goRun("basic");
   //      s.goRun("BeanResolver");
           s.goRun("seimiagent");
+
     }
 }

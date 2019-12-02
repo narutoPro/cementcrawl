@@ -1,5 +1,7 @@
 package cn.wanghaomiao.strategy;
 
+import cn.wanghaomiao.dao.mybatis.MybatisStoreDAO;
+import cn.wanghaomiao.model.Page;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +26,12 @@ public class UrlConsumer implements Runnable {
     private BlockingQueue<String> urlQuene;
     private WebDriver driver;
 
-    public UrlConsumer(BlockingQueue<String> urls ,ConcurrentHashMap<String,Integer> dataStatics) {
+    private MybatisStoreDAO dao;
+
+    private volatile boolean flag=false;
+
+    public UrlConsumer(BlockingQueue<String> urls ,ConcurrentHashMap<String,Integer> dataStatics,MybatisStoreDAO dao) {
+        this.dao=dao;
         this.urlQuene = urls;
         this.dataStatics=dataStatics;
         System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
@@ -43,6 +50,13 @@ public class UrlConsumer implements Runnable {
                 String url=urlQuene.take();
                 driver.get(url);
                 Document document= Jsoup.parse(driver.getPageSource());
+
+                Page page=new Page();
+                page.setUrl(url);
+                page.setHtmlText(document.html());
+                dao.savePage(page);
+
+
                 JXDocument doc=JXDocument.create(document);
                 List<Object> urls = doc.sel("//a/@href");
                 for (Object urlInPage:urls
@@ -79,5 +93,12 @@ public class UrlConsumer implements Runnable {
             return false;
         }
         return true;
+    }
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }
