@@ -2,7 +2,10 @@ package cn.wanghaomiao.seimi.model;
 
 import javax.persistence.*;
 
-
+/**
+ * 没有经过webkit内核 js渲染等
+ * 下个
+ */
 @Entity
 @Table
 public class Page {
