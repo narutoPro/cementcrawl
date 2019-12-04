@@ -24,7 +24,7 @@
         <property name="dataSource" ref="mybatisDataSource"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.wanghaomiao.dao.mybatis"/>
+        <property name="basePackage" value="cn.chende.dao.mybatis"/>
         <property name="sqlSessionFactoryBeanName" value="seimiSqlSessionFactory"/>
     </bean>
 </beans>

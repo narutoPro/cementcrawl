@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.wanghaomiao.seimi.spring.boot.SeimiCrawlerAutoConfiguration
+cn.chende.seimi.spring.boot.SeimiCrawlerAutoConfiguration
